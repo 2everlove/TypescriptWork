@@ -1,45 +1,105 @@
-// const name ="mika",
-//     age = 32,
-//     gender ="male";
+import * as CryptoJS from "crypto-js";
 
-// const sayHi = (name:string, age:number, gender:string): void => {
-//     console.log(`Hello ${name}, you are ${age}, a ${gender}`);
-// };
+class Block {
+    static calculateBlockhash = (
+        index:number, 
+        previousHash:string,
+        timestamp:number,
+        data:string
+    ): string => 
+        CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
 
-// interface Human {
-//     name:string,
-//     age:number,
-//     gender:string
-// }
+    static validateStructure = (aBlock: Block): boolean => 
+        typeof aBlock.index === "number" && 
+        typeof aBlock.hash === "string" && 
+        typeof aBlock.previousHash === "string" && 
+        typeof aBlock.timestamp === "number" && 
+        typeof aBlock.data === "string";
 
-class Human{
-    static getAge(age) {
-        return age;
-    }
-    public name: string;
-    private age: number;
-    public gender: string;
-    constructor(name: string, age: number, gender?: string){
-        this.name = name;
-        this.age = age;
-        this.gender = gender;
+    public index: number;
+    public hash: string;
+    public previousHash: string;
+    public data: string;
+    public timestamp: number;
+
+    constructor(
+        index: number,
+        hash: string,
+        previousHash: string,
+        data: string,
+        timestamp: number
+    ) {
+        this.index = index;
+        this.hash = hash;
+        this.previousHash = previousHash;
+        this.data = data;
+        this.timestamp = timestamp;
     }
 }
 
-// const person = {
-//     name : "mika",
-//     age : 22,
-//     gender : "male"
-// };
+const genesisBlock: Block = new Block(0, "20202020202", "", "Hello", 123456);
 
-const ahn = new Human("mika", 32, "male");
+let blockchain: Block[] = [genesisBlock];
 
-const sayHi = (person: Human): string => {
-    return `Hello ${person.name}, you are ${Human.getAge(32)}, a ${person.gender}`;
+const getBlockchain = (): Block[] => blockchain;
+
+const getLatestBlock = (): Block => blockchain[blockchain.length - 1];
+
+const getNewTimeStamp = (): number => Math.round(new Date().getTime()/1000);
+
+const createNewBlock = (data:string): Block => {
+    const previousBlock : Block = getLatestBlock();
+    const newIndex : number = previousBlock.index +1;
+    const newTimeStamp : number = getNewTimeStamp();
+    const newHash : string = Block.calculateBlockhash(
+        newIndex, 
+        previousBlock.hash, 
+        newTimeStamp, 
+        data
+    );
+    const newBlock : Block = new Block(
+        newIndex, 
+        newHash, 
+        previousBlock.hash, 
+        data, 
+        newTimeStamp
+    );
+    addBlock(newBlock);
+    return newBlock;
 };
 
-// console.log(sayHi(person));
-console.log(sayHi(ahn));
+const getHashforBlock = (aBlock: Block): string => 
+    Block.calculateBlockhash(
+        aBlock.index, 
+        aBlock.previousHash, 
+        aBlock.timestamp, 
+        aBlock.data
+    );
 
-export{};
+const isBlockValid = (candidateBlock: Block, previousBlock: Block): boolean =>{
+    if(!Block.validateStructure(candidateBlock)){
+        return false;
+    } else if (previousBlock.index + 1 !== candidateBlock.index){
+        return false;
+    } else if (previousBlock.hash !== candidateBlock.previousHash){
+        return false;
+    } else if (getHashforBlock(candidateBlock) !== candidateBlock.hash){
+        return false;
+    } else {
+        return true;
+    }
+};
 
+const addBlock = (candidateBlock: Block): void => {
+    if(isBlockValid(candidateBlock, getLatestBlock())){
+        blockchain.push(candidateBlock);
+    }
+};
+
+createNewBlock("second block");
+createNewBlock("third block");
+createNewBlock("fourth block");
+
+console.log(blockchain);
+
+export{}
