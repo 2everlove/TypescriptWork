@@ -12,10 +12,10 @@
   "license": "ISC",
   "devDependencies": {
     "@types/chance": "^1.1.1",
-    "@types/node": "^14.14.37",
+    "@types/node": "^14.17.5",
     "@types/ramda": "^0.27.39",
     "ts-node": "^9.1.1",
-    "typescript": "^4.2.3"
+    "typescript": "^4.3.5"
   },
   "dependencies": {
     "chance": "^1.1.7",
