@@ -4,7 +4,7 @@
  
  
 ##Setting
-- As Project creator
+(hyphen) As Project creator
 1. `npm init --y`
 2. `npm i -D typescript ts-node`
 3. `npm i -D @types/node`
@@ -12,5 +12,5 @@
   - `npm run dev`
   - `npm run build`
 
-- As Project user
+(hyphen) As Project user
 1. `npm i`
