@@ -4,13 +4,13 @@
  
  
 ##Setting
-(hyphen) As Project creator
+- As Project creator
 1. `npm init --y`
 2. `npm i -D typescript ts-node`
 3. `npm i -D @types/node`
 4. `tsc --init`
-  - `npm run dev`
-  - `npm run build`
+ - `npm run dev`
+ - `npm run build`
 
-(hyphen) As Project user
+- As Project user
 1. `npm i`
