@@ -3,7 +3,7 @@
  Learning Typescript by making a various examples
  
  
-##Setting
+## Setting
 
 As Project creator
 
