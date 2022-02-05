@@ -8,7 +8,7 @@
 1. `npm init --y`
 2. `npm i -D typescript ts-node`
 3. `npm i -D @types/node`
-4. `tsc --init
+4. `tsc --init`
   - `npm run dev`
   - `npm run build`
 
