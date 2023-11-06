@@ -4,6 +4,12 @@
  
  
 ## Setting
+scoop bucket add extras
+scoop install nodejs-lts
+scoop install touch
+npm install touch-cli -g
+npm i -g ts-node
+npm i -D typescript ts-node
 
 #### As Project creator
 1. `npm init --y`
