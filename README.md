@@ -4,6 +4,8 @@
  
  
 ## Setting
+
+#### Commands
 scoop bucket add extras
 scoop install nodejs-lts
 scoop install touch
